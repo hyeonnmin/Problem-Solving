@@ -1,7 +1,7 @@
 #include <iostream>	
 #include <vector>
 #include <string>
-#include <map>
+#include <unordered_map>
 
 using namespace std;
 
@@ -13,7 +13,7 @@ int main()
 
 	int N, M;
 	vector<string> poketmons;
-	map<string, int> poketmons_map;
+	unordered_map<string, int> poketmons_map;
 
 	cin >> N >> M;
 	for (int i = 0; i < N; ++i)
@@ -39,6 +39,14 @@ int main()
 		else
 		{
 			cout << poketmons_map[input] << '\n';
+			//for (int j = 0; j < poketmons.size(); ++j)
+			//{
+			//	if (poketmons[j] == input)
+			//	{
+			//		cout << j + 1 << '\n';
+			//		break;
+			//	}
+			//}
 		}
 
 	}
