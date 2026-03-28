@@ -1,57 +1,69 @@
 #include <iostream>
+#include <vector>
 
 using namespace std;
 
 int main()
 {
+	ios::sync_with_stdio(false);
+	cin.tie(0);
+	cout.tie(0);
+
 	int N, M;
 	cin >> N >> M;
 
-	int* a = new int[N];
-	int* b = new int[M];
+	vector<int> a;
+	vector<int> b;
 
 	for (int i = 0; i < N; ++i)
 	{
 		int input;
 		cin >> input;
-		a[i] = input;
+		a.push_back(input);
 	}
 
 	for (int i = 0; i < M; ++i)
 	{
 		int input;
 		cin >> input;
-		b[i] = input;
+		b.push_back(input);
 	}
 
-	int* sub = new int[N + M];
-	int a_idx = 0;
-	int b_idx = 0;
-	for (int i = 0; i < N + M; ++i)
+	vector<int> total;
+	int point_a = 0;
+	int point_b = 0;
+
+	while (point_a < N && point_b < M)
 	{
-		if (a_idx == N)
+		if (a[point_a] < b[point_b])
 		{
-			sub[i] = b[b_idx];
-			++b_idx;
-		}
-		else if (b_idx == M)
-		{
-			sub[i] = a[a_idx];
-			++a_idx;
-		}
-		else if (a[a_idx] < b[b_idx])
-		{
-			sub[i] = a[a_idx];
-			++a_idx;
+			total.push_back(a[point_a]);
+			++point_a;
 		}
 		else
 		{
-			sub[i] = b[b_idx];
-			++b_idx;
+			total.push_back(b[point_b]);
+			++point_b;
 		}
 	}
-	for (int i = 0; i < N + M; ++i)
+
+	if (point_a < N)
 	{
-		cout << sub[i] << " ";
+		while (point_a < N)
+		{
+			total.push_back(a[point_a]);
+			++point_a;
+		}
 	}
+	else
+	{
+		while (point_b < M)
+		{
+			total.push_back(b[point_b]);
+			++point_b;
+		}
+	}
+
+	for (auto& e : total)
+		cout << e << ' ';
 }
