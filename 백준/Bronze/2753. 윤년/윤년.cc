@@ -1,16 +1,19 @@
-#include <iostream>	
+#include <iostream>
 
 using namespace std;
 
 int main()
 {
-	int input;
-	cin >> input;
+	ios::sync_with_stdio(false);
+	cin.tie(0);
+	cout.tie(0);
 
-	bool check1 = (input % 4 == 0) ? true : false;
-	bool check2 = (input % 100 != 0) || (input % 400 == 0);
-	if (check1 && check2)
-		cout << "1\n";
+	int year;
+	cin >> year;
+
+	if (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0))
+		cout << 1;
 	else
-		cout << "0\n";
+		cout << 0;
+
 }
