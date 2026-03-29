@@ -1,28 +1,34 @@
-#include <iostream>	
-#include <vector>	
+#include <iostream>
+#include <vector>
 
 using namespace std;
 
-void backtracking(vector<int>& v, vector<bool>& visited, int count, vector<int>& sub)
+void back_tracking(vector<bool>& visit, vector<int>& container, int size)
 {
-	if (count == sub.size())
+	if (container.size() == size)
 	{
-		for (int i = 0; i < sub.size(); ++i)
-			cout << sub[i] << " ";
+		for (auto& e : container)
+			cout << e << " ";
 		cout << '\n';
-		
+
 		return;
 	}
-	for (int i = 0; i < v.size(); ++i)
+
+	for (int i = 1; i < visit.size(); ++i)
 	{
-		if (visited[i] == false)
+		if (visit[i] == false)
 		{
-			sub[count] = v[i];
-			visited[i] = true;
-			backtracking(v, visited, count + 1, sub);
-			visited[i] = false;
+			container.push_back(i);
+			visit[i] = true;
+			back_tracking(visit, container, size);
+
+			container.pop_back();
+			visit[i] = false;
 		}
 	}
+
+
+
 }
 
 int main()
@@ -32,14 +38,10 @@ int main()
 	cout.tie(0);
 
 	int N, M;
-
 	cin >> N >> M;
 
-	vector<int> v;
-	vector<bool> visited(N,false);
-	for (int i = 1; i <= N; ++i)
-		v.push_back(i);
+	vector<bool> visit(N + 1, false);
+	vector<int> container;
 
-	vector<int> sub(M);
-	backtracking(v, visited, 0, sub);
+	back_tracking(visit, container, M);
 }
