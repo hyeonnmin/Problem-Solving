@@ -45,10 +45,10 @@ int main()
 		}
 	}
 
-	vector<vector<int>> result;
 	while (N != 1)
 	{
 		N /= 2;
+		vector<vector<int>> result;
 		result.resize(N, vector<int>(N));
 
 		for (int i = 0; i < N * 2; i += 2)
@@ -59,8 +59,8 @@ int main()
 			}
 		}
 
-		matrix = result;
+		matrix = std::move(result);
 	}
 
-	cout << result[0][0];
+	cout << matrix[0][0];
 }
