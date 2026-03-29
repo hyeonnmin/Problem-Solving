@@ -1,17 +1,8 @@
 #include <iostream>
+#include <string>
+#include <vector>
 
 using namespace std;
-
-bool checkLeft(char input)
-{
-	string left{ "qwertasdfgzxcv" };
-	for (auto& c : left)
-	{
-		if (c == input)
-			return true;
-	}
-	return false;
-}
 
 int main()
 {
@@ -19,48 +10,68 @@ int main()
 	cin.tie(0);
 	cout.tie(0);
 
-	int x[30];
-	int y[30];
-	string key[3]{ "qwertyuiop", "asdfghjkl", "zxcvbnm" };
+	vector<pair<int, int>> keys(26);
+	vector<bool> pos(26, false);
 
-	for (int i = 0; i < 3; ++i)
+	string r1 = "qwertyuiop";
+	string r2 = "asdfghjkl";
+	string r3 = "zxcvbnm";
+
+	for (int i = 0; i < r1.size(); ++i)
 	{
-		for (int j = 0; j < key[i].size(); ++j)
-		{
-			int idx = key[i][j] - 'a';
-			x[idx] = j;
-			y[idx] = i;
-		}
+		int idx = r1[i] - 'a';
+		keys[idx] = {0, i};
+	}
+	for (int i = 0; i < r2.size(); ++i)
+	{
+		int idx = r2[i] - 'a';
+		keys[idx] = { 1, i };
+	}
+	for (int i = 0; i < r3.size(); ++i)
+	{
+		int idx = r3[i] - 'a';
+		keys[idx] = { 2, i };
 	}
 
-	int time = 0;
+	string left = "qwertasdfgzxcv";
+	string right = "yuiophjklbnm";
 
-	char curLeft, curRight;
+	for (auto& e : left)
+	{
+		int idx = e - 'a';
+		pos[idx] = true;
+	}
 
-	cin >> curLeft >> curRight;
+	char point_left, point_right;
+	cin >> point_left >> point_right;
 
 	string input;
 	cin >> input;
 
-	for (auto& c : input)
+	int count = 0;
+
+	for (auto& e : input)
 	{
-		int movingTime;
-		if (checkLeft(c))
+		int idx = e - 'a';
+
+		if (pos[idx] == true)
 		{
-			int curIdx = curLeft - 'a';
-			int inputIdx = c - 'a';
-			movingTime = abs(x[curIdx] - x[inputIdx]) + abs(y[curIdx] - y[inputIdx]);
-			curLeft = c;
+			pair<int, int> p1 = keys[idx];
+			pair<int, int> p2 = keys[point_left - 'a'];
+
+			count += abs(p1.first - p2.first) + abs(p1.second - p2.second) + 1;
+			point_left = e;
 		}
 		else
 		{
-			int curIdx = curRight - 'a';
-			int inputIdx = c - 'a';
-			movingTime = abs(x[curIdx] - x[inputIdx]) + abs(y[curIdx] - y[inputIdx]);
-			curRight= c;
+			pair<int, int> p1 = keys[idx];
+			pair<int, int> p2 = keys[point_right - 'a'];
+
+			count += abs(p1.first - p2.first) + abs(p1.second - p2.second) + 1;
+			point_right = e;
 		}
-		time += (movingTime + 1);
+
 	}
 
-	cout << time << '\n';
+	cout << count;
 }
