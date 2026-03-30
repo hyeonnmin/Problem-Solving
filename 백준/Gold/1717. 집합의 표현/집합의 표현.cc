@@ -9,9 +9,7 @@ int find(int a, vector<int>& v)
 		return a;
 	else
 	{	
-		v[a] = find(v[a], v);
-
-		return find(v[a], v);
+		return v[a] = find(v[a], v);
 	}
 }
 
