@@ -45,16 +45,14 @@ int main()
 
 		for (auto& e : graph[cur])
 		{
-			if (subject_year[e] == 0)
-			{
-				--pre_count[e];
+			--pre_count[e];
 
-				if (pre_count[e] == 0)
-				{
-					q.push(e);
-					subject_year[e] = subject_year[cur] + 1;
-				}
+			if (pre_count[e] == 0)
+			{
+				q.push(e);
+				subject_year[e] = subject_year[cur] + 1;
 			}
+			
 		}
 	}
 
