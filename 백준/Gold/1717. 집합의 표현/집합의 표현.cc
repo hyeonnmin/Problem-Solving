@@ -1,8 +1,28 @@
 #include <iostream>
 #include <vector>
-#include <set>
 
 using namespace std;
+
+int find(int a, vector<int>& v)
+{
+	if (v[a] == -1)
+		return a;
+	else
+	{	
+		v[a] = find(v[a], v);
+
+		return find(v[a], v);
+	}
+}
+
+void merge(int a, int b, vector<int>& v)
+{
+	int f1 = find(a, v);
+	int f2 = find(b, v);
+
+	if (f1 != f2)
+		v[f1] = f2;
+}
 
 int main()
 {
@@ -10,46 +30,26 @@ int main()
 	cin.tie(0);
 	cout.tie(0);
 
-	set<int> s1{ 0 };
-	set<int> s2{ 1 };
-
 	int n, m;
 	cin >> n >> m;
 
-	vector<vector<int>> group(n + 1);
-	vector<int> set;
-
-	for (int i = 0; i <= n; ++i)
-	{
-		group[i].push_back(i);
-		set.push_back(i);
-	}
+	vector<int> v(n + 1, -1);
 
 	for (int i = 0; i < m; ++i)
 	{
-		int o, a, b;
-		cin >> o >> a >> b;
+		int order;
+		int a, b;
+		cin >> order >> a >> b;
 
-		if (o == 0)
-		{
-			int g1 = group[set[a]].size() > group[set[b]].size() ? set[a] : set[b];
-			int g2 = group[set[a]].size() > group[set[b]].size() ? set[b] : set[a];
-
-			if (g1 != g2)
-			{
-				for (auto& e : group[g2])
-				{
-					group[g1].push_back(e);
-					set[e] = g1;
-				}
-			}
-		}
+		if (order == 0)
+			merge(a, b, v);
 		else
 		{
-			if (set[a] == set[b])
+			if (find(a, v) == find(b, v))
 				cout << "YES\n";
 			else
 				cout << "NO\n";
 		}
+
 	}
 }
