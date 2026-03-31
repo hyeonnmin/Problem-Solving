@@ -1,77 +1,50 @@
-#include <iostream>	
-#include <queue>
-#include <map>
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <set>
 
 using namespace std;
 
 int main()
 {
+	ios::sync_with_stdio(false);
+	cin.tie(0);
+	cout.tie(0);
+
 	int T;
 	cin >> T;
 
 	for (int i = 0; i < T; ++i)
 	{
-		priority_queue<int, vector<int>, greater<int>> minQueue;
-		priority_queue<int> maxQueue;
-		map<int, int> m;
-
 		int k;
-		cin >> k;
+		cin >> k;;
 
+		multiset<int> s;
 		for (int j = 0; j < k; ++j)
 		{
-			char c;
-			cin >> c;
+			char order;
+			int input;
 
-			if (c == 'I')
+			cin >> order >> input;
+
+			if (order == 'I')
 			{
-				int input;
-				cin >> input;
-
-				minQueue.push(input);
-				maxQueue.push(input);
-				m[input]++;
+				s.insert(input);
 			}
-			else if (c == 'D')
+			else
 			{
-				int input;
-				cin >> input;
-
-				if (maxQueue.empty() || minQueue.empty())
-					continue;
-
-				if (input == 1)
+				if (!s.empty())
 				{
-					if (maxQueue.empty())
-						continue;
-
-					m[maxQueue.top()]--;
-					maxQueue.pop();
-				}
-
-				else if (input == -1)
-				{
-					if (minQueue.empty())
-						continue;
-
-					m[minQueue.top()]--;
-					minQueue.pop();
-				}
-
-				while (!maxQueue.empty() && m[maxQueue.top()] == 0)
-				{
-					maxQueue.pop();
-				}
-				while (!minQueue.empty() && m[minQueue.top()] == 0)
-				{
-					minQueue.pop();
+					if (input == -1)
+						s.erase(s.begin());
+					else
+						s.erase(prev(s.end()));
 				}
 			}
 		}
-
-		if (maxQueue.empty() && minQueue.empty())
+		if (s.empty())
 			cout << "EMPTY\n";
 		else
-			cout << maxQueue.top() << " " << minQueue.top() << '\n';
+			cout << *prev(s.end()) << " " << *s.begin() << '\n';
 	}
 }
