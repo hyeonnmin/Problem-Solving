@@ -1,53 +1,50 @@
-#include <iostream>	
-#include <vector>
+#include <iostream>
 
 using namespace std;
 
 int main()
 {
-	string board;
-	cin >> board;
+	ios::sync_with_stdio(false);
+	cin.tie(0);
+	cout.tie(0);
 
-	string a{ "AAAA" };
-	string b{ "BB" };
-
+	string p1 = "AAAA";
+	string p2 = "BB";
 	string output;
+
+	string input;
+	cin >> input;
+	input.push_back('.');
+
 	int count = 0;
-	for (int i = 0; i < board.size(); ++i)
+	for (auto& e : input)
 	{
-		if (board[i] == 'X')
+		if (e == 'X')
 			++count;
-		else
+		
+		if (e == '.')
 		{
-			if (count % 2 == 0)
+			while (count != 0)
 			{
-				int count_a = count / 4;
-				int count_b = (count % 4) / 2;
-				for (int j = 0; j < count_a; ++j)
-					output += a;
-				for (int j = 0; j < count_b; ++j)
-					output += b;
-				output += '.';
-				count = 0;
+				if (count >= 4)
+				{
+					count -= 4;
+					output.append(p1);
+				}
+				else if (count >= 2)
+				{
+					count -= 2;
+					output.append(p2);
+				}
+				else
+				{
+					cout << -1;
+					return 0;
+				}
 			}
-			else
-			{
-				output = "-1";
-				break;
-			}
+			output.push_back('.');
 		}
 	}
-	if (count % 2 == 0)
-	{
-		int count_a = count / 4;
-		int count_b = (count % 4) / 2;
-		for (int j = 0; j < count_a; ++j)
-			output += a;
-		for (int j = 0; j < count_b; ++j)
-			output += b;
-	}
-	else
-		output = "-1";
-
+	output.pop_back();
 	cout << output;
 }
