@@ -1,22 +1,27 @@
-#include <iostream>	
+#include <iostream>
+#include <vector>
 
 using namespace std;
 
 int main()
 {
-	bool students[31]{ false };
+	ios::sync_with_stdio(false);
+	cin.tie();
+	cout.tie();
 
-	students[0] = true;
+	vector<bool> check(31, false);
+
 	for (int i = 0; i < 28; ++i)
 	{
-		int input;
-		cin >> input;
-		students[input] = true;
+		int number;
+		cin >> number;
+
+		check[number] = true;
 	}
 
-	for (int i = 1; i < 31; ++i)
+	for (int i = 1; i < check.size(); ++i)
 	{
-		if (students[i] == false)
-			cout << i << "\n";
+		if (check[i] == false)
+			cout << i << '\n';
 	}
 }
