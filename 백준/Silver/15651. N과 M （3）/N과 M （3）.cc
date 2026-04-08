@@ -1,38 +1,31 @@
 #include <iostream>
+#include <vector>
 
 using namespace std;
 
-int container[7];
-bool visited[7];
-
-void backtracking(int N, int M, int counter)
+void BackTracking(int N, int M, vector<int>& v)
 {
-	if (counter == M)
+	if (v.size() == M)
 	{
-		for (int i = 0; i < M; ++i)
-			cout << container[i] << " ";
-		cout << "\n";
+		for (auto& e : v)
+			cout << e << " ";
+		cout << '\n';
+
 		return;
 	}
-	else
+	for (int i = 1; i <= N; ++i)
 	{
-		for (int i = 0; i < N; ++i)
-		{
-			container[counter] = i + 1;
-			backtracking(N, M, counter + 1);
-		}
-		return;
+		v.push_back(i);
+		BackTracking(N, M, v);
+		v.pop_back();
 	}
 }
 
 int main()
 {
-	ios::sync_with_stdio(false);
-	cin.tie(0);
-	cout.tie(0);
-
 	int N, M;
 	cin >> N >> M;
 
-	backtracking(N, M, 0);
+	vector<int> v;
+	BackTracking(N, M, v);
 }
