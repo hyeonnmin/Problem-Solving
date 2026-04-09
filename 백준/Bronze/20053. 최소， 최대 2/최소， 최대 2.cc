@@ -1,4 +1,4 @@
-#include <iostream>	
+#include <iostream>
 
 using namespace std;
 
@@ -9,25 +9,25 @@ int main()
 	cout.tie(0);
 
 	int T;
-	cin >> T;;
+	cin >> T;
 
 	for (int i = 0; i < T; ++i)
 	{
 		int N;
 		cin >> N;
 
-		int max = INT32_MIN;
-		int min = INT32_MAX;
+		int max_value = INT32_MIN;
+		int min_value = INT32_MAX;
+
 		for (int j = 0; j < N; ++j)
 		{
 			int input;
 			cin >> input;
-			if (input > max)
-				max = input;
-			if (input < min)
-				min = input;
+
+			max_value = max_value < input ? input : max_value;
+			min_value = min_value > input ? input : min_value;
 		}
 
-		cout << min << " " << max << '\n';
+		cout << min_value << " " << max_value << '\n';
 	}
 }
