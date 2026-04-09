@@ -1,5 +1,5 @@
-#include <iostream>	
-#include <vector>
+#include <iostream>
+#include <map>
 
 using namespace std;
 
@@ -9,16 +9,17 @@ int main()
 	cin.tie(0);
 	cout.tie(0);
 
-	vector<bool> cards(20000001, false);
 	int N;
 	cin >> N;
+
+	map<int, bool> m;
+
 	for (int i = 0; i < N; ++i)
 	{
 		int input;
 		cin >> input;
 
-		input += 10000000;
-		cards[input] = true;
+		m.insert({input, true});
 	}
 
 	int M;
@@ -27,10 +28,12 @@ int main()
 	{
 		int input;
 		cin >> input;
-		input += 10000000;
-		if (cards[input] == true)
-			cout << "1 ";
-		else
+
+		if (m.find(input) == m.end())
 			cout << "0 ";
+		
+		else if (m.find(input)->second == true)
+			cout << "1 ";
 	}
+
 }
