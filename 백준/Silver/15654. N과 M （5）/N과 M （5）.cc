@@ -1,30 +1,31 @@
-#include <iostream>	
+#include <iostream>
 #include <vector>
 #include <algorithm>
 
 using namespace std;
 
-void backtracking(vector<int>& numbers, vector<int>& visited, vector<int>& container, int count)
+void BackTracking(vector<int>& v, vector<bool>& visits, vector<int>& record, int M)
 {
-	if (count == container.size())
+
+	if (record.size() == M)
 	{
-		for (auto& v : container)
-			cout << v << " ";
+		for (auto& e : record)
+			cout << e << " ";
 		cout << '\n';
 		return;
 	}
-	else
-	{
-		for (int i = 0; i < numbers.size(); ++i)
-		{
-			if (visited[i] == false)
-			{
-				container[count] = numbers[i];
-				visited[i] = true;
-				backtracking(numbers, visited, container, count + 1);
-				visited[i] = false;
-			}
 
+	for (int i = 0; i < v.size(); ++i)
+	{
+		if (visits[i] == false)
+		{
+			record.push_back(v[i]);
+			visits[i] = true;
+
+			BackTracking(v, visits, record, M);
+
+			record.pop_back();
+			visits[i] = false;
 		}
 	}
 }
@@ -34,21 +35,21 @@ int main()
 	ios::sync_with_stdio(false);
 	cin.tie(0);
 	cout.tie(0);
-	
+
 	int N, M;
 	cin >> N >> M;
 
-	vector<int> numbers;
-	vector<int> visited(N, false);
-	vector<int> container(M);
-
+	vector<int> v;
 	for (int i = 0; i < N; ++i)
 	{
 		int input;
 		cin >> input;
-		numbers.push_back(input);
+		v.push_back(input);
 	}
-	std::sort(numbers.begin(), numbers.end());
 
-	backtracking(numbers, visited, container, 0);
+	sort(v.begin(), v.end());
+
+	vector<int> record;
+	vector<bool> visits(N, false);
+	BackTracking(v, visits, record, M);
 }
