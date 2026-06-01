@@ -1,4 +1,5 @@
 #include <vector>
+#include <unordered_map> 
 using namespace std;
 
 int solution(vector<int> nums)
@@ -7,17 +8,17 @@ int solution(vector<int> nums)
     
     int size = nums.size() / 2;
     
-    vector<bool> visit(2000001, false);
+    unordered_map<int, bool> m; 
+    
     int count = 0;
     for(auto& e : nums)
     {
-        if (visit[e] == false)
+        if (m.find(e) == m.end())
         {
+            m[e] = true;
             ++count;
-            visit[e] = true;
         }
     }
-    
     answer = size > count ? count : size;
     
     return answer;
